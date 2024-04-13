@@ -35,7 +35,7 @@ function ProductShowcase({discount, sku, productId, title, image, price}) {
     <div style={{
       width: '70%',
       minHeight: '400px',
-    }} className="card w-96 bg-base-100 shadow-xl">
+    }} className="my-10 card w-96 bg-base-100 shadow-xl">
   <figure><img src={image} alt={`${title} Picture`} /></figure>
   <div className="card-body">
     <h1 className={`text-2xl card-title`}>{title}</h1>
