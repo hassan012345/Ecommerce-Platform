@@ -23,7 +23,6 @@ const getProduct = async (req, res) => {
 
 const createProduct = async (req, res) => {
     // Check if user is admin
-    console.log(req.session);
     const user = await User.findOne({ _id: req.session.userId });
     if (!user.isAdmin) {
         return res.status(401).json({ message: 'Unauthorized' });
@@ -35,7 +34,6 @@ const createProduct = async (req, res) => {
     try {
         // Check request contains all the required fields
         const { name, price, description, inStock, color } = req.body;
-        console.log(name, price, description, inStock, color);
         if (!name || !price || !description || !inStock || !color) {
             return res.status(400).json({ message: 'All fields are required' })
         }
@@ -72,7 +70,6 @@ const updateProduct = async (req, res) => {
             return res.status(401).json({ message: 'Unauthorized' });
         }
         const product = await Product.findOne({ _id: req.params.id });
-        console.log(product);
         const { name, price, description, inStock, color } = req.body;
         if (name) {
             product.name = name;
@@ -106,8 +103,19 @@ const getCategories = async (req, res) => {
     }
 }
 
+const searchProducts = async (req, res) => {
+    const { query } = req.query;
+    console.log(query);
+    try {
+        const products = await Product.find({name : query});
+        res.json(products);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 const getFilteredProducts = async (req, res) => {
-    const { category, priceFrom, priceTo, brand, inStock } = req.query;
+    const { category, priceFrom, priceTo, color, inStock } = req.query;
     try {
         let query = {};
 
@@ -121,15 +129,15 @@ const getFilteredProducts = async (req, res) => {
         } else if (priceTo) {
             query.price = { $lte: priceTo };
         }
-        if (brand) {
-            query.brand = brand;
+        if (color) {
+            query.color = color;
         }
         if (inStock) {
             query.inStock = inStock;
         }
+        
 
         const products = await Product.find(query);
-        console.log(query);
         res.json(products);
     } catch (err) {
         res.status(500).json({ message: 'An error occurred' });
@@ -150,10 +158,8 @@ const deleteProduct = async (req, res) => {
             return res.status(401).json({ message: 'Unauthorized' });
         }
 
-        console.log(req.params.id);
         // Find product by id
         const product = await Product.findOneAndDelete({ _id: req.params.id });
-        console.log(product);
         res.status(200).json("Product deleted");
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -161,4 +167,4 @@ const deleteProduct = async (req, res) => {
 }
 
 
-export { getProducts, getProduct, createProduct, updateProduct, deleteProduct, getFilteredProducts };
+export { getProducts, getProduct, createProduct, updateProduct, deleteProduct, getFilteredProducts, getCategories, searchProducts};

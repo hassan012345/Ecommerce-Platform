@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { createFactory, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -19,6 +19,8 @@ import SingleProduct from './pages/SingleProduct'
 import Checkout from './pages/Checkout'
 import Cart from './pages/Cart'
 import OrderConfirm from './pages/OrderConfirm'
+import Search from './pages/Search'
+import TrackOrder from './pages/TrackOrder'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -33,7 +35,9 @@ function App() {
         <Route path="/" Component={Home}>
       
         </Route>
-
+        <Route path="/search" Component={Search}>
+      
+        </Route>
 
         <Route path="/shop" Component={Shopping}>
       
@@ -56,6 +60,9 @@ function App() {
       
         </Route>
 
+        <Route path="/trackorder" Component={TrackOrder}>
+      
+        </Route>
 
         <Route path="/confirm-order" Component={OrderConfirm}>
       

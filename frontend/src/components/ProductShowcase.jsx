@@ -47,6 +47,7 @@ function ProductShowcase({discount, sku, productId, title, image, price}) {
     </div>
     <div className="card-actions justify-end">
       {/* <button className="btn btn-primary" onClick={addToCart}>Add to Cart</button> */}
+      <a className="btn btn-primary" onClick={addToCart}>Add to Cart</a>
       <a href={`/product/${productId}`} className="btn btn-primary">View Product</a>
     </div>
   </div>

@@ -1,6 +1,6 @@
 import express from "express";
 import {signup, login, logout, sellerSignup, sellerSignin} from '../controllers/authController.js';
-import {getProducts,getProduct, createProduct,updateProduct, deleteProduct, getFilteredProducts } from '../controllers/productController.js';
+import {getProducts,getProduct, createProduct,updateProduct, deleteProduct, getFilteredProducts, searchProducts } from '../controllers/productController.js';
 import {createOrder, getOrders, updateOrderStatus} from '../controllers/orderController.js';
 import { Router } from "express";
 import test from "./test.js";
@@ -19,6 +19,7 @@ router.post('/products', createProduct);
 router.patch('/products/:id', updateProduct);
 router.delete('/products/:id', deleteProduct);
 // router.get('/categories/:category', getCategories);
+router.get('/search', searchProducts);
 router.post('/orders', createOrder);
 router.get('/orders',getOrders);
 router.post('/orders/status/:id', updateOrderStatus);
