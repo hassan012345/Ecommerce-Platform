@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { useUserStore } from '../store/store'
 
 export default function Nav() {
-  const { cartItems, resetCartItems } = useUserStore();
+  const { cartItems, resetCartItems, isLogin } = useUserStore();
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   
@@ -57,9 +57,8 @@ export default function Nav() {
             </form>
           </li>
           <li><Link to={"/"}>Home</Link></li>
-          <li><Link to={"/shop"}>Shop</Link></li>
-          <li><a>Contact Us</a></li>
-          <li><a>About Us</a></li>
+          {/* <li><a>Contact Us</a></li>
+          <li><a>About Us</a></li> */}
           <li><Link to={"/trackorder"}>Track Order</Link></li>
 
         </ul>
@@ -107,23 +106,24 @@ export default function Nav() {
               </div>
             </div>
           </div>
-          <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+          {isLogin ? (
+            // If user is authenticated, render the profile dropdown
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full">
+                  <img alt="Profile" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                </div>
               </div>
+              <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                <li><a className="justify-between">Profile<span className="badge">New</span></a></li>
+                <li><a>Settings</a></li>
+                <li><a>Logout</a></li>
+              </ul>
             </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li><a>Settings</a></li>
-              <li><a>Logout</a></li>
-            </ul>
-          </div>
+          ) : (
+            // If user is not authenticated, render the login link
+            <Link to="/login" className="btn btn-ghost text-lg">Login</Link>
+          )}
         </div>
       </div>
     </div>

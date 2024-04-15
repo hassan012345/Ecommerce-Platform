@@ -1,6 +1,7 @@
 import { createFactory, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import {useLocation} from 'react-router-dom'
 import './App.css'
 import Nav from "./components/Nav"
 import Footer from './components/Footer'
@@ -21,6 +22,8 @@ import Cart from './pages/Cart'
 import OrderConfirm from './pages/OrderConfirm'
 import Search from './pages/Search'
 import TrackOrder from './pages/TrackOrder'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -28,11 +31,16 @@ function App() {
     <Router>
     <Nav/>
  
-     
-
       <Routes>
 
         <Route path="/" Component={Home}>
+      
+        </Route>
+        <Route path="/login" Component={Login}>
+      
+        </Route>
+
+        <Route path="signup" Component={Signup}>
       
         </Route>
         <Route path="/search" Component={Search}>

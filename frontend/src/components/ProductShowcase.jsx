@@ -32,23 +32,19 @@ function ProductShowcase({discount, sku, productId, title, image, price}) {
       });
   }
   return (
-    <div style={{
-      width: '70%',
-      minHeight: '400px',
-    }} className="my-10 card w-96 bg-base-100 shadow-xl">
-  <figure><img src={image} alt={`${title} Picture`} /></figure>
-  <div className="card-body">
-    <h1 className={`text-2xl card-title`}>{title}</h1>
-    <div className='flex justify-center items-center my-5 text-2xl'>
-    <p className={`mx-5 font-bold text-1xl ${discount==0?'':'line-through'}`}>Rs. { price }</p>
-    {
-      discount !== 0 ? <p className='font-bold text-1xl'>Rs. { price-(price*discount)/100 }</p> : null
-    }
+    <div className="flex flex-col rounded-lg overflow-hidden shadow-lg bg-white">
+  <img src={image} alt={`${title} Picture`} className="w-full h-auto" />
+  <div className="p-4 flex flex-col justify-between flex-1">
+    <div>
+      <h2 className="text-lg font-semibold">{title}</h2>
+      <div className="flex justify-between items-center mt-2">
+        <p className={`text-base ${discount !== 0 && 'line-through'}`}>Rs. {price}</p>
+        {discount !== 0 && <p className="text-base font-semibold">Rs. {price - (price * discount) / 100}</p>}
+      </div>
     </div>
-    <div className="card-actions justify-end">
-      {/* <button className="btn btn-primary" onClick={addToCart}>Add to Cart</button> */}
-      <a className="btn btn-primary" onClick={addToCart}>Add to Cart</a>
-      <a href={`/product/${productId}`} className="btn btn-primary">View Product</a>
+    <div className="flex justify-between items-center mt-4">
+      <button className="btn btn-primary px-4 py-2" onClick={addToCart}>Add to Cart</button>
+      <a href={`/product/${productId}`} className="btn btn-primary px-4 py-2">View Product</a>
     </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 import express from "express";
 import {signup, login, logout, sellerSignup, sellerSignin} from '../controllers/authController.js';
 import {getProducts,getProduct, createProduct,updateProduct, deleteProduct, getFilteredProducts, searchProducts } from '../controllers/productController.js';
-import {createOrder, getOrders, updateOrderStatus} from '../controllers/orderController.js';
+import {createOrder, getOrders, updateOrderStatus, trackOrder} from '../controllers/orderController.js';
 import { Router } from "express";
 import test from "./test.js";
 const router = Router();
@@ -22,6 +22,7 @@ router.delete('/products/:id', deleteProduct);
 router.get('/search', searchProducts);
 router.post('/orders', createOrder);
 router.get('/orders',getOrders);
+router.get('/orders/track', trackOrder);
 router.post('/orders/status/:id', updateOrderStatus);
 router.post('/seller/signup', sellerSignup);
 router.post('/seller/signin', sellerSignin);

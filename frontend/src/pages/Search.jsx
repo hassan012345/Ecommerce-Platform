@@ -24,7 +24,7 @@ const Categories = () => {
     // useEffect(() => {
     //     fetchSearchResults();
     // }, [query]);
-    
+
     useEffect(() => {
         fetch(`http://localhost:3000/products/filter?category=${category}&priceFrom=${priceFrom}&priceTo=${priceTo}&color=${color}&inStock=${instock}`)
             .then(res => res.json())
@@ -79,45 +79,45 @@ const Categories = () => {
     return (
         <>
             <h1 className="text-4xl font-bold my-4 p-5">Filter By</h1>
-            <div className="grid grid-cols-3 p-5">
+            <div className="grid grid-cols-4 p-5">
 
                 <div className="col-span-1">
                     <div className="container">
-                        <ul className="menu bg-base-200 w-56 rounded-box">
-                            <li >
-                                <details close>
-                                    <summary>{categories[0].category}</summary>
+                        {/* Category Filter */}
+                        <div className="menu bg-base-200 w-56 rounded-box mb-4">
+                            <h3 className="text-lg font-semibold mb-2">Categories</h3>
+                            {categories.map((category, index) => (
+                                <details key={index} close>
+                                    <summary>{category.category}</summary>
                                     <ul>
-                                        {categories[0].subCategories.map((subCategory, subIndex) => (
+                                        {category.subCategories.map((subCategory, subIndex) => (
                                             <li key={subIndex} onClick={handleCategory}><a>{subCategory}</a></li>
                                         ))}
                                     </ul>
                                 </details>
-                            </li>
-                            <li >
-                                <details close>
-                                    <summary>{categories[1].category}</summary>
-                                    <ul>
-                                        {categories[1].subCategories.map((subCategory, subIndex) => (
-                                            <li key={subIndex} onClick={handleColor}><a>{subCategory}</a></li>
-                                        ))}
-                                    </ul>
-                                </details>
-                            </li>
-                        </ul>
-                        <ul className="menu bg-base-200 w-56 rounded-box">
-                            <label htmlFor="priceFrom">Price From</label>
+                            ))}
+                        </div>
+
+                        {/* Price Range Filter */}
+                        <div className="menu bg-base-200 w-56 rounded-box mb-4">
+                            <h3 className="text-lg font-semibold mb-2">Price Range</h3>
+                            <label htmlFor="priceFrom" className="block mb-1">From</label>
                             <input type="range" name="priceFrom" value={priceFrom} min={50} step={50} max={1000} onChange={handlePriceFrom} />
-                            <label htmlFor="priceTo">Price To</label>
+                            <label htmlFor="priceTo" className="block mb-1">To</label>
                             <input type="range" name="PriceTo" min={50} value={priceTo} step={50} max={1000} onChange={handlePriceTo} />
-                        </ul>
-                        <ul className="menu bg-base-200 w-56 rounded-box">
-                            <input className="" type="checkbox" name="instock" value={instock} onChange={handleInStock} />
-                            <label htmlFor="instock" >In Stock</label>
-                        </ul>
+                        </div>
+
+                        {/* In Stock Filter */}
+                        <div className="menu bg-base-200 w-56 rounded-box mb-4">
+                            <input className="mr-2" type="checkbox" name="instock" value={instock} onChange={handleInStock} />
+                            <label htmlFor="instock" className="text-lg">In Stock</label>
+                        </div>
                     </div>
                 </div>
-                <div className="col-span-2">
+
+
+
+                <div className="col-span-3">
                     <div className="flex">
                         <div className="w-full">
                             <Shopping products={products} />

@@ -30,8 +30,7 @@ function Checkout() {
 
       <div className='w-[100%] flex justify-around items-center'>
         <div id='form'>
-
-
+          
 
           <label className="my-5 form-control w-full max-w-xs">
             <div className="label">
