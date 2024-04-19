@@ -1,3 +1,7 @@
+import { createFactory, useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import {useLocation} from 'react-router-dom'
 import './App.css'
 import Nav from "./components/Nav"
 import Footer from './components/Footer'
@@ -19,15 +23,22 @@ import OrderConfirm from './pages/Buyer/OrderConfirm'
 import Search from './pages/Buyer/Search'
 import TrackOrder from './pages/Buyer/TrackOrder'
 import Login from './pages/Buyer/Login'
+import SellerDashboard from './pages/Seller/SellerDashboard'
 import Signup from './pages/Buyer/Signup'
-
+import dashboard from './pages/Seller/dashboard/Dashboard'
+import SellerSignup from './pages/Seller/Signup'
+import SellerLogin from './pages/Seller/Login'
 
 function App() {  
- 
-  return (
+const location = useLocation()
+const whiteListedPath = ['/dashboard']
+const shouldRenderNavandFooter = !whiteListedPath.includes(location.pathname)
 
+  return (
     <Router>
-       <Nav/>
+      
+    {shouldRenderNavandFooter && <Nav/>}
+ 
       <Routes>
 
         <Route path="/" Component={Home}>
@@ -77,10 +88,26 @@ function App() {
       
         </Route>
 
+        <Route path="/seller/signup" Component={SellerSignup}>
       
+        </Route>
+
+        <Route path="/seller/login" Component={SellerLogin}>
+      
+        </Route>
+
+        <Route path="/seller/dashboard" Component={SellerDashboard}>
+      
+        </Route>
+
+        <Route path="/dashboard" Component={dashboard}>
+      
+        </Route>
        
       </Routes>
-      <Footer/>
+    
+    {shouldRenderNavandFooter && <Footer/>}
+
   </Router>
    
   

@@ -104,10 +104,9 @@ const getCategories = async (req, res) => {
 }
 
 const searchProducts = async (req, res) => {
-    const { query } = req.query;
-    console.log(query);
+    const { name } = req.query
     try {
-        const products = await Product.find({name : query});
+        const products = await Product.find({ name: name }); // Use 'name' instead of 'query'
         res.json(products);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -115,7 +114,7 @@ const searchProducts = async (req, res) => {
 }
 
 const getFilteredProducts = async (req, res) => {
-    const { category, priceFrom, priceTo, color, inStock } = req.query;
+    const { category, priceFrom, priceTo, inStock } = req.query;
     try {
         let query = {};
 
@@ -129,13 +128,10 @@ const getFilteredProducts = async (req, res) => {
         } else if (priceTo) {
             query.price = { $lte: priceTo };
         }
-        if (color) {
-            query.color = color;
-        }
-        if (inStock) {
+        if (inStock !== null && inStock !== undefined) {
             query.inStock = inStock;
         }
-        
+
 
         const products = await Product.find(query);
         res.json(products);
@@ -167,4 +163,4 @@ const deleteProduct = async (req, res) => {
 }
 
 
-export { getProducts, getProduct, createProduct, updateProduct, deleteProduct, getFilteredProducts, getCategories, searchProducts};
+export { getProducts, getProduct, createProduct, updateProduct, deleteProduct, getFilteredProducts, getCategories, searchProducts };

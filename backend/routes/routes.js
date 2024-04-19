@@ -18,14 +18,14 @@ router.get('/products/:id', getProduct);
 router.post('/products', createProduct);
 router.patch('/products/:id', updateProduct);
 router.delete('/products/:id', deleteProduct);
-// router.get('/categories/:category', getCategories);
+// router.get('/categories/:category', getCategories);  
 router.get('/search', searchProducts);
 router.post('/orders', createOrder);
 router.get('/orders',getOrders);
 router.get('/orders/track', trackOrder);
 router.post('/orders/status/:id', updateOrderStatus);
 router.post('/seller/signup', sellerSignup);
-router.post('/seller/signin', sellerSignin);
+router.post('/seller/login', sellerSignin);
 router.post('/test', test);
 
 export default router;

@@ -86,6 +86,7 @@ const login = async (req, res) => {
     res.status(200).json({
         message: 'Logged in successfully',
         userId: user._id,
+        username: user.fullname,
     });
 }
 
@@ -102,7 +103,7 @@ const logout = (req, res) => {
 
 // Seller controller
 const sellerSignup = async (req, res) => {
-    const { name, email, password, phone, businessName, businessDescription, categories } = req.body
+    const { name, email, password, phone, businessName, businessDescription} = req.body
 
     if (!name) {
         return res.status(400).json({ message: 'Name is required' })
@@ -131,21 +132,14 @@ const sellerSignup = async (req, res) => {
     if (!businessDescription) {
         return res.status(400).json({ message: 'Business description is required' })
     }
-
-
-
-    if (!categories) {
-        return res.status(400).json({ message: 'Categories are required' })
-    }
-
     const seller = await Seller.findOne({ email })
-
+    
     if (seller) {
         return res.status(400).json({ message: 'Seller already exists' })
     }
-
+    const hashedPassword = bcrypt.hashSync(password, 10)
     try {
-        const newSeller = new Seller({ name, email, password, phone, businessName, businessDescription, categories })
+        const newSeller = new Seller({ name, email, password : hashedPassword, phone, businessName, businessDescription})
         await newSeller.save()
         return res.status(200).json({ message: 'Seller created successfully' })
     } catch (err) {
