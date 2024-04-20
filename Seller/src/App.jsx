@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 
 
-import SellerDashboard from './pages/Seller/SellerDashboard'
 import dashboard from './pages/Seller/dashboard/Dashboard'
 import SellerSignup from './pages/Seller/Signup'
 import SellerLogin from './pages/Seller/Login'
@@ -26,10 +25,6 @@ function App() {
         </Route>
 
         <Route path="/seller/login" Component={SellerLogin}>
-      
-        </Route>
-
-        <Route path="/seller/dashboard" Component={SellerDashboard}>
       
         </Route>
 
