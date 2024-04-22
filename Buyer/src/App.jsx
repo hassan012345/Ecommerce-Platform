@@ -20,7 +20,7 @@ import Search from './pages/Buyer/Search'
 import TrackOrder from './pages/Buyer/TrackOrder'
 import Login from './pages/Buyer/Login'
 import Signup from './pages/Buyer/Signup'
-
+import CompareProduct from './components/CompareProduct';
 
 function App() {  
  
@@ -77,7 +77,9 @@ function App() {
       
         </Route>
 
-      
+        <Route path="/compare" Component={CompareProduct}>
+
+        </Route>
        
       </Routes>
       <Footer/>

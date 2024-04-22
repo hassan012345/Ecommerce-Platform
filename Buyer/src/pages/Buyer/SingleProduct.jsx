@@ -5,6 +5,7 @@ import { useUserStore } from '../../store/store';
 
 function SingleProduct() {
   const [product, setProduct] = useState(null);
+  const { compareItems, setCompareItems } = useUserStore();
   let { id } = useParams();
 
   const getProduct = async () => {
@@ -32,6 +33,11 @@ function SingleProduct() {
     setRating(event.target.value);
   };
 
+  const addToCompare = () => {
+  if (!compareItems.some(item => item.id === product.id)) {
+    setCompareItems(prevItems => [...prevItems, product]);
+  }
+}
   const addToCart = () => {
     const newItem = {
       id: id,
@@ -50,9 +56,6 @@ function SingleProduct() {
     }
   }
 
-  const comparePrpduct = () => {
-
-  }
 
   if(product === null) return <h1>Loading...</h1>
 
@@ -66,7 +69,7 @@ function SingleProduct() {
             <p className="py-6">{product.description}</p>
             <h1 className='text-4xl font-bold my-5'>{product.price}</h1>
             <button onClick={addToCart} className="btn btn-primary">Add to Cart</button>
-            <button onClick={comparePrpduct} className="btn btn-primary">Compare Product</button>
+            <button onClick={addToCompare} className="btn btn-primary">Compare Product</button>
           </div>
         </div>
       </div>

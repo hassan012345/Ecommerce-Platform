@@ -10,21 +10,22 @@ const trackOrder = () => {
     setOrderNumber(e.target.value);
   }
   // Get the order number entered by the user
-  console.log(orderNumber);
-  // Make an API call to fetch the order status based on the order number
-  // Replace 'apiEndpoint' with the actual API endpoint
-    fetch("http://localhost:3000/orders/track", {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ orderNumber }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        setOrderStatus(data);
-      })
+  const trackOrder = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/orders/track", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ orderNumber }),
+      })  
+      const data = await response.json();
+      console.log(data);
+      setOrderStatus(data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
   return (
     <div className="hero min-h-screen" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)' }}>
@@ -37,7 +38,7 @@ const trackOrder = () => {
             <input className="input input-bordered join-item" onChange={handleChange} placeholder="Order Number" />
             <button className="btn btn-primary join-item rounded-r-full" onClick={trackOrder}>Track Order Now</button>
           </div>
-          {orderStatus && <p className="mt-5">Order Status: {orderStatus}</p>}
+          {orderStatus && <p className="mt-5" style={{ color: 'green', fontSize: '20px', fontWeight: 'bold' }}>Order Status : {orderStatus}</p>}
         </div>
       </div>
     </div>

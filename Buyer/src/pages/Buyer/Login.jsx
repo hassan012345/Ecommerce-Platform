@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useUserStore } from '../../store/store';
+import { useNavigate } from 'react-router-dom';
 function Login() {
   const setIsLogin = useUserStore(state => state.setIsLogin);
   const setUsername = useUserStore(state => state.setUsername);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -30,12 +32,12 @@ function Login() {
       if (response.ok) {
         // Handle successful login
         setSuccessMessage('Login successful');
-        // set useUserStore isLogin to true
         const data = await response.json();
+        console.log(data);
         localStorage.setItem('isLogin', true);
         localStorage.setItem('username', data.username);
         // redirect to dashboard
-        window.location.href = '/';
+        // window.location.href = '/';
       } else {
         // Handle failed login
         setErrorMessage('Login failed');
