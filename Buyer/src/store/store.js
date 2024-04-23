@@ -8,9 +8,13 @@ export const useUserStore = create((set) => ({
   alertMsg: "",
   alertType: "",
   attachments: [],
+  Product1: {},
+  Product2: {},
   cartItems: JSON.parse(localStorage.getItem('cartItems')) || [],
   attachmentProgress: 0,
   uploadProgressCaption: "",
+  SetProduct1: (newState) => set({ Product1:newState}),
+  SetProduct2: (newState) => set({ Product2:newState}),
   setAttachmentProgress: (newState) => set({ attachmentProgress:newState}),
   setUploadProgressCaption: (newState) => set({ uploadProgressCaption:newState}),
   setAttachments: (attachment) => {

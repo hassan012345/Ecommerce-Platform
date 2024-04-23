@@ -23,21 +23,21 @@ const getProduct = async (req, res) => {
 
 const createProduct = async (req, res) => {
     // Check if user is admin
-    const user = await User.findOne({ _id: req.session.userId });
-    if (!user.isAdmin) {
-        return res.status(401).json({ message: 'Unauthorized' });
-    }
+    // const user = await User.findOne({ _id: req.session.userId });
+    // if (!user.isAdmin) {
+    //     return res.status(401).json({ message: 'Unauthorized' });
+    // }
 
     // Create new product
 
 
     try {
         // Check request contains all the required fields
-        const { name, price, description, inStock, color } = req.body;
+        const { name, price, description, inStock, color, brand, available_units } = req.body;
         if (!name || !price || !description || !inStock || !color) {
             return res.status(400).json({ message: 'All fields are required' })
         }
-        const product = new Product({ name, price, description, inStock, color });
+        const product = new Product({ name, price, description, inStock, color,  brand, available_units });
         // Save product to database
         await product.save();
         // Return product
@@ -104,9 +104,16 @@ const getCategories = async (req, res) => {
 }
 
 const searchProducts = async (req, res) => {
-    const { name } = req.query
+    const { name } = req.query;
+    console.log(name)
     try {
-        const products = await Product.find({ name: name }); // Use 'name' instead of 'query'
+        const products = await Product.find({
+            $or: [
+                { name: { $regex: new RegExp(name, "i") } }, // 'i' for case-insensitive
+                { description: { $regex: new RegExp(name, "i") } },
+                { brand: { $regex: new RegExp(name, "i") } }
+              ]
+        }); // Use 'name' instead of 'query'
         res.json(products);
     } catch (error) {
         res.status(500).json({ message: error.message });
