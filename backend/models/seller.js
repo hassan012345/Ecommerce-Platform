@@ -13,10 +13,6 @@ const sellerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    phone: {
-        type: String,
-        required: true
-    },
     businessName: {
         type: String,
         required: true

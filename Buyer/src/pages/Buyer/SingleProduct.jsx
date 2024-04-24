@@ -2,8 +2,11 @@ import React from 'react'
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useUserStore } from '../../store/store';
+import { useNavigate } from 'react-router-dom';
+import { toast }from 'react-toastify'
 
 function SingleProduct() {
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const { compareItems, setCompareItems } = useUserStore();
   let { id } = useParams();
@@ -22,22 +25,55 @@ function SingleProduct() {
     }
   }
 
+  const showToast = () => {
+    toast.success('Added to cart');
+  }
+  const rateAndReview = async () => {
+    console.log("before toast")
+    toast.success('Rating and Review submitted',{
+      position: "bottom-right",
+      icon: false,
+      autoClose: 5000,
+    });
+    try {
+      const res = await fetch(`http://localhost:3000/ratings/${id}`, {
+        credentials: 'include',
+        method: 'POST',
+       headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          rating: rating,
+          review: review
+        })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        toast.success(data);
+      } else {
+        throw new Error('Failed to rate and review');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
   useEffect(() => {
     getProduct();
   }, [])
 
   const { cartItems, setCartItems } = useUserStore();
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(3);
+  const [review, setReview] = useState('');
 
   const handleRatingChange = (event) => {
-    setRating(event.target.value);
+    setRating(parseInt(event.target.value));
   };
 
   const addToCompare = () => {
-  if (!compareItems.some(item => item.id === product.id)) {
-    setCompareItems(prevItems => [...prevItems, product]);
+    if (!compareItems.some(item => item.id === product.id)) {
+      setCompareItems(prevItems => [...prevItems, product]);
+    }
   }
-}
   const addToCart = () => {
     const newItem = {
       id: id,
@@ -56,8 +92,7 @@ function SingleProduct() {
     }
   }
 
-
-  if(product === null) return <h1>Loading...</h1>
+  if (product === null) return <h1>Loading...</h1>
 
   return (
     <div>
@@ -74,7 +109,7 @@ function SingleProduct() {
         </div>
       </div>
 
-
+      <div className='my-10 flex justify-center flex-col items-center' id='tabs'></div>
 
 
       <div className='my-10 flex justify-center flex-col items-center' id='tabs'>
@@ -101,7 +136,7 @@ function SingleProduct() {
 
 
 
-        <div className="rating rating-lg">
+        <div className="rating rating-lg gap-2">
           {[1, 2, 3, 4, 5].map((value) => (
             <input
               type="radio"
@@ -113,10 +148,10 @@ function SingleProduct() {
             />
           ))}
         </div>
-        <textarea placeholder="What you like about the product?" className="my-5 textarea textarea-bordered textarea-lg w-full max-w-xs" ></textarea>
+        <textarea placeholder="What you like about the product?" className="my-5 textarea textarea-bordered textarea-lg w-full max-w-xs" onChange={(e) => setReview(e.target.value)} ></textarea>
 
 
-        <button className='my-5 btn btn-primary'>Submit Rating</button>
+        <button className='my-5 btn btn-primary' onClick={rateAndReview}>Submit Rating</button>
 
       </div>
 

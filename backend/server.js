@@ -13,28 +13,22 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+// app.use(cookieParser());
 app.use(session({
-  secret: 'sPqR0yZmTqWn4r7u!x/A?C)E(H+MbQeThWmZq4t7w!z%C*F-J@NcR',
+  secret: 'your-secret-key',
   resave: false,
-  saveUninitialized: false,
-  cookie: { secure: false, maxAge: 1000 * 60 * 60} // Note: The `secure` option should only be enabled for HTTPS
+  saveUninitialized: false
 }));
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+  next();
+});
 
 app.use('/',router);
-// app.use(session({
-//   secret: 'sPqR0yZmTqWn4r7u!x/A?C)E(H+MbQeThWmZq4t7w!z%C*F-J@NcR',
-//   resave: false,
-//   saveUninitialized: false,
-//   cookie: { 
-//     secure: false,
-//     maxAge: 1000 * 60 * 60
-//   },
-//   genid: (req) => {
-//     return crypto.randomBytes(16).toString('hex');
-//   }
-// }));
-
 connection();
 
 

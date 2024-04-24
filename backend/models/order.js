@@ -5,7 +5,7 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     product: {
-        type: mongoose.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Product',
         required: true
     }
@@ -31,37 +31,19 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    products: [productSchema],
-    address: {
-        street: {
-            type: String,
-            required: true
-        },
-        city: {
-            type: String,
-            required: true
-        },
-        province: {
-            type: String,
-            required: true
-        },
-        country: {
-            type: String,
-            default: 'Pakistan',
-            required: true
-        },
-        postalCode: {
-            type: String,
-            required: false
-        },
-        contactName: {
-            type: String,
-            required: true
-        },
-        contactNumber: {
-            type: String,
-            required: true
-        }
+    buyer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    products: [productSchema],  
+    shippingAddress: {
+        type: String,
+        required: true
+    },
+    paymentMethod : {
+        type: String,
+        required: true
     },
     status: {
         type: String,

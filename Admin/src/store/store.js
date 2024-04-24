@@ -13,6 +13,13 @@ export const useUserStore = create((set) => ({
   uploadProgressCaption: "",
   setAttachmentProgress: (newState) => set({ attachmentProgress:newState}),
   setUploadProgressCaption: (newState) => set({ uploadProgressCaption:newState}),
+  compareItems: [],
+  setCompareItems: (newArr) => {
+    localStorage.setItem('compareItems', JSON.stringify(newArr));
+    set((state) => ({
+      compareItems: newArr,
+    }));
+  },
   setAttachments: (attachment) => {
     set((state) => ({
       attachments: [...state.attachments, attachment],

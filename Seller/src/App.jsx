@@ -7,9 +7,9 @@ import {
 } from "react-router-dom";
 
 
-import dashboard from './pages/Seller/dashboard/Dashboard'
-import SellerSignup from './pages/Seller/Signup'
-import SellerLogin from './pages/Seller/Login'
+import dashboard from './pages/dashboard/Dashboard'
+import SellerSignup from './pages/Signup'
+import SellerLogin from './pages/Login'
 
 function App() {  
 
@@ -29,7 +29,6 @@ function App() {
         </Route>
 
         <Route path="/dashboard" Component={dashboard}>
-      
         </Route>
        
       </Routes>

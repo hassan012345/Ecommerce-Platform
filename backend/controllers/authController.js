@@ -2,7 +2,7 @@
 import bcrypt from 'bcrypt'
 import User from '../models/user.js'
 import Seller from '../models/seller.js'
-
+let viewCount = 0;
 const signup = async (req, res) => {
     const { username, email, password } = req.body
 
@@ -45,6 +45,9 @@ const signup = async (req, res) => {
     }
 }
 const login = async (req, res) => {
+    if (req.session.userId) {
+        return res.status(200).json({ message: 'Already logged in' });
+    }
     const { email, password } = req.body
 
     if (!email) {
@@ -82,12 +85,19 @@ const login = async (req, res) => {
 
     req.session.userId = user._id;
     req.session.email = email;
-    req.session.lastLoginTime = new Date().toLocaleString();
-    res.status(200).json({
-        message: 'Logged in successfully',
-        userId: user._id,
-        username: user.fullname,
-    });
+    req.session.save();
+    res.status(200).json({ message: 'Logged in successfully' })
+}
+
+const profile = async (req, res) => {
+    if (!req.session.userId) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+    const user = await User.findById(req.session.userId);
+    if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+    }
+    return res.status(200).json({ user });
 }
 
 const logout = (req, res) => {
@@ -95,7 +105,7 @@ const logout = (req, res) => {
         if (err) {
             return res.status(500).json({ message: 'Something went wrong!' });
         }
-        return res.status(200).json({ 
+        return res.status(200).json({
             message: 'Successfully logged out',
         });
     })
@@ -103,7 +113,7 @@ const logout = (req, res) => {
 
 // Seller controller
 const sellerSignup = async (req, res) => {
-    const { name, email, password, phone, businessName, businessDescription} = req.body
+    const { name, email, password, phone, businessName, businessDescription } = req.body
 
     if (!name) {
         return res.status(400).json({ message: 'Name is required' })
@@ -112,7 +122,7 @@ const sellerSignup = async (req, res) => {
     if (!email) {
         return res.status(400).json({ message: 'Email is required' })
     }
-    if(!password){
+    if (!password) {
         return res.status(400).json({ message: 'Password is required' })
     }
 
@@ -133,13 +143,13 @@ const sellerSignup = async (req, res) => {
         return res.status(400).json({ message: 'Business description is required' })
     }
     const seller = await Seller.findOne({ email })
-    
+
     if (seller) {
         return res.status(400).json({ message: 'Seller already exists' })
     }
     const hashedPassword = bcrypt.hashSync(password, 10)
     try {
-        const newSeller = new Seller({ name, email, password : hashedPassword, phone, businessName, businessDescription})
+        const newSeller = new Seller({ name, email, password: hashedPassword, phone, businessName, businessDescription })
         await newSeller.save()
         return res.status(200).json({ message: 'Seller created successfully' })
     } catch (err) {
@@ -148,6 +158,7 @@ const sellerSignup = async (req, res) => {
 }
 
 const sellerSignin = async (req, res) => {
+    console.log(req.session)
     const { email, password } = req.body
 
     if (!email) {
@@ -170,7 +181,6 @@ const sellerSignin = async (req, res) => {
     }
 
     const seller = await Seller.findOne({ email })
-
     if (!seller) {
         return res.status(400).json({ message: 'Seller does not exist' })
     }
@@ -181,7 +191,8 @@ const sellerSignin = async (req, res) => {
     if (!match) {
         return res.status(400).json({ message: 'Invalid credentials' })
     }
-
+    req.session.sellerId = seller._id;
+    req.session.save();
     return res.status(200).json({ message: 'Logged in successfully' })
-}   
-export { login, signup, logout, sellerSignup, sellerSignin};
+}
+export { login, signup, logout, sellerSignup, sellerSignin };

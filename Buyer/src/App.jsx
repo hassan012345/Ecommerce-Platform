@@ -1,7 +1,7 @@
 import './App.css'
 import Nav from "./components/Nav"
 import Footer from './components/Footer'
-
+import {ToastContainer} from 'react-toastify'
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -25,7 +25,7 @@ import CompareProduct from './components/CompareProduct';
 function App() {  
  
   return (
-
+    <>
     <Router>
        <Nav/>
       <Routes>
@@ -85,7 +85,7 @@ function App() {
       <Footer/>
   </Router>
    
-  
+  </>
   )
 }
 

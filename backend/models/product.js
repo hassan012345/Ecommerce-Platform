@@ -21,10 +21,6 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    available_units: {
-        type: Number,
-        required: true
-    },
     inStock: {
         type: Boolean,
         required: true
@@ -41,11 +37,12 @@ const productSchema = new mongoose.Schema({
     },
     brand: {
         type: String,
+    },
+    seller: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Seller',
         required: true
     },
-    color: [{
-        type: String
-    }],
     createdAt: {
         type: Date,
         default: Date.now

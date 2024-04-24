@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { useUserStore } from '../../store/store';
+import { useUserStore } from '../store/store';
+import { useNavigate } from 'react-router-dom';
 function Login() {
+  const navigate = useNavigate();
   const setIsLogin = useUserStore(state => state.setIsLogin);
   const setUsername = useUserStore(state => state.setUsername);
   const [email, setEmail] = useState('');
@@ -31,8 +33,7 @@ function Login() {
         setSuccessMessage('Login successful');
         // set useUserStore isLogin to true
         const data = await response.json();
-        localStorage.setItem('isLogin', true);
-        localStorage.setItem('username', data.username);
+        navigate('/dashboard');
         // redirect to dashboard
       } else {
         // Handle failed login

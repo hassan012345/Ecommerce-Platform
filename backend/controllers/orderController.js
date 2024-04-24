@@ -5,19 +5,23 @@ const createOrder = async (req, res) => {
     // Create order
     try {
         // Check if user is logged in
-        const { orderNumber, totalPrice, taxAmount, discount, products, address, status } = req.body;
-        console.log(products);
+        const  buyer = req.session.userId;
+        const { orderNumber, totalPrice, taxAmount, discount, products, shippingAddress, paymentMethod } = req.body;
+        // if (buyer === undefined && buyer || orderNumber === undefined || totalPrice === undefined || taxAmount === undefined || discount === undefined || products === undefined || shippingAddress === undefined || paymentMethod === undefined || status === undefined) {
+        //     return res.status(400).json({ message: 'Invalid data' });
+        // }
         const order = new Order({
+            buyer,
             orderNumber,
             totalPrice,
             taxAmount,
             discount,
             products,
-            address,
-            status
+            shippingAddress,
+            paymentMethod,
         });
         await order.save();
-        res.status(201).json(order);
+        res.status(201).json("Order created successfully");
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -25,11 +29,14 @@ const createOrder = async (req, res) => {
 
 const getOrders = async (req, res) => {
     try {
-        const orders = await Order.find();
-        console.log(order);
+        //find all orders and populate buyer and products
+        const orders = await Order.find().populate('buyer').populate('products.product');
+        const totalIncome = orders.reduce((acc, order) => acc + order.totalPrice, 0);
+        console.log(totalIncome);
         res.status(200).json(orders);
-    } catch (error) {
-        res.status(404).json({ message: error.message });
+    }   
+    catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }
 

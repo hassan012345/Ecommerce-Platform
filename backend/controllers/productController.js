@@ -23,21 +23,21 @@ const getProduct = async (req, res) => {
 
 const createProduct = async (req, res) => {
     // Check if user is admin
-    const user = await User.findOne({ _id: req.session.userId });
-    if (!user.isAdmin) {
-        return res.status(401).json({ message: 'Unauthorized' });
-    }
+    // const user = await User.findOne({ _id: req.session.userId });
+    // if (!user.isAdmin) {
+    //     return res.status(401).json({ message: 'Unauthorized' });
+    // }
 
     // Create new product
 
 
     try {
         // Check request contains all the required fields
-        const { name, price, description, inStock, color } = req.body;
-        if (!name || !price || !description || !inStock || !color) {
+        const { name, price, description, inStock, colors, seller } = req.body;
+        if (!name || !price || !description || !inStock || !colors || !seller) {
             return res.status(400).json({ message: 'All fields are required' })
         }
-        const product = new Product({ name, price, description, inStock, color });
+        const product = new Product({ name, price, description, inStock, colors, seller });
         // Save product to database
         await product.save();
         // Return product
@@ -90,6 +90,30 @@ const updateProduct = async (req, res) => {
         res.status(200).json(product);
     } catch (error) {
         res.status(500).json({ message: error.message })
+    }
+}
+
+const createRating = async (req, res) => {
+
+    // if (!req.session.userId) {
+    //     return res.status(401).json({ message: 'Unauthorized' });
+    // }
+    const { rating, review } = req.body;
+    const productId = req.params.id;
+    if (!rating || !review) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+    try {
+        const product = await Product.findOne({ _id: productId })
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        product.reviews.push(review);
+        product.rating = (product.rating * (product.reviews.length - 1) + rating) / product.reviews.length;
+        await product.save();
+        res.status(201).json("Rating added");
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }
 
@@ -163,4 +187,4 @@ const deleteProduct = async (req, res) => {
 }
 
 
-export { getProducts, getProduct, createProduct, updateProduct, deleteProduct, getFilteredProducts, getCategories, searchProducts };
+export { getProducts, getProduct, createProduct, updateProduct, createRating, deleteProduct, getFilteredProducts, getCategories, searchProducts };
