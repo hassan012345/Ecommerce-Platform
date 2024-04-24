@@ -128,9 +128,16 @@ const getCategories = async (req, res) => {
 }
 
 const searchProducts = async (req, res) => {
-    const { name } = req.query
+    const { name } = req.query;
+    console.log(name)
     try {
-        const products = await Product.find({ name: name }); // Use 'name' instead of 'query'
+        const products = await Product.find({
+            $or: [
+                { name: { $regex: new RegExp(name, "i") } }, // 'i' for case-insensitive
+                { description: { $regex: new RegExp(name, "i") } },
+                { brand: { $regex: new RegExp(name, "i") } }
+              ]
+        }); // Use 'name' instead of 'query'
         res.json(products);
     } catch (error) {
         res.status(500).json({ message: error.message });
