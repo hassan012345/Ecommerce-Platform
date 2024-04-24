@@ -28,12 +28,8 @@ function Footer() {
     {
       heading: 'Get to Know Us',
       links: [
-        { href: '#', text: 'Careers' },
-        { href: '#', text: 'Blog' },
-        { href: '#', text: 'About Amazon' },
-        { href: '#', text: 'Investor Relations' },
-        { href: '#', text: 'Amazon Devices' },
-        { href: '#', text: 'Amazon Science' }
+        { href: '#', text: 'About Us' },
+        { href: '#', text: 'Contact Us' },
       ]
     },
     {
@@ -42,6 +38,20 @@ function Footer() {
         { href: '#', text: 'Sell products' },
       ]
     }
+    , {
+      heading: 'Out Brand',
+      links : [
+        { href: '#', text: 'We sell what we show' },
+        { href: '#', text: 'Customer trust is our Brand' },
+      ]
+    },
+    {
+      heading: 'Terms and Conditions',
+      links : [
+        { href: '#', text: 'Terms of Use' },
+        { href: '#', text: 'Privacy Policy' },
+      ]
+    },
   ];
 
   return (
