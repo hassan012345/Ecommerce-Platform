@@ -19,8 +19,6 @@ const CompareProducts = () => {
     const res = await req.json();
 
     setProducts(res);
-   
-
 
   }
 

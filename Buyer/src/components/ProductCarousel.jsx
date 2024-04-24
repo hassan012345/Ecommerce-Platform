@@ -14,10 +14,8 @@ export default function ElasticCarousel() {
 
   const getProducts = async () => {
     const res = await fetch('http://localhost:3000/products')
-    console.log(res)
     const data = await res.json()
     setProducts(data.slice(0, 5));
-    console.log(data)
   }
 
   useEffect(() => {

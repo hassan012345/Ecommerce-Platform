@@ -104,7 +104,7 @@ function SingleProduct() {
             <p className="py-6">{product.description}</p>
             <h1 className='text-4xl font-bold my-5'>{product.price}</h1>
             <button onClick={addToCart} className="btn btn-primary">Add to Cart</button>
-            <button onClick={addToCompare} className="btn btn-primary">Compare Product</button>
+            <button onClick={()=> navigate('/compare')} className="btn btn-primary">Compare Product</button>
           </div>
         </div>
       </div>
