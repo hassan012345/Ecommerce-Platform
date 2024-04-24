@@ -10,7 +10,7 @@ function Cart() {
   const calculateCartPrice = () => {
     let price = 0;
     cartItems.map(item => {
-      price += (item.qty) * item.price;
+      price += (item.quantity) * item.price;
     })
 
     setTotalPrice(price);
@@ -38,7 +38,6 @@ function Cart() {
     {/* head */}
     <thead>
       <tr>
-        <th>Id</th>
         <th>Product Name</th>
         <th>Unit Price</th>
         <th>Qty</th>
@@ -50,11 +49,11 @@ function Cart() {
         cartItems.map((cart, index)=> {
           return (
             <tr key={index}>
-            <th>{cart.id}</th>
-            <td>{cart.title}</td>
+
+            <td>{cart.name}</td>
             <td>Rs. {cart.price}</td>
-            <td>{cart.qty}</td>
-            <td>Rs. {cart.qty*cart.price}</td>
+            <td>{cart.quantity}</td>
+            <td>Rs. {cart.quantity*cart.price}</td>
           </tr>
           )
         })

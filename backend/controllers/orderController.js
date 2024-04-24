@@ -6,7 +6,6 @@ const createOrder = async (req, res) => {
     try {
         // Check if user is logged in
         const  buyer = req.session.userId;
-        console.log(buyer)
         const { orderNumber, totalPrice, taxAmount, discount, products, shippingAddress, paymentMethod } = req.body;
         // if (buyer === undefined && buyer || orderNumber === undefined || totalPrice === undefined || taxAmount === undefined || discount === undefined || products === undefined || shippingAddress === undefined || paymentMethod === undefined || status === undefined) {
         //     return res.status(400).json({ message: 'Invalid data' });
