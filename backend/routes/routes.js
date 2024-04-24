@@ -1,5 +1,5 @@
 import express from "express";
-import { signup, login, logout, sellerSignup, sellerSignin } from '../controllers/authController.js';
+import { signup, login, logout, getProfile, sellerSignup, sellerSignin } from '../controllers/authController.js';
 import { getProducts, getProduct, createProduct, createRating, updateProduct, deleteProduct, getFilteredProducts, searchProducts } from '../controllers/productController.js';
 import { createOrder, getOrders, updateOrderStatus, trackOrder } from '../controllers/orderController.js';
 import authenticate from '../middleware/sellermiddleware.js';
@@ -19,6 +19,7 @@ router.get("/", (req, res) => {
 router.post("/signup", signup);
 router.post("/login", login);
 router.get("/logout", logout);
+router.get("/profile/", getProfile);
 router.get('/products', getProducts);
 router.get('/products/filter', getFilteredProducts);
 router.get('/products/:id', getProduct);

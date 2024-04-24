@@ -89,7 +89,7 @@ const login = async (req, res) => {
     res.status(200).json({ message: 'Logged in successfully' })
 }
 
-const profile = async (req, res) => {
+const getProfile = async (req, res) => {
     if (!req.session.userId) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -97,6 +97,7 @@ const profile = async (req, res) => {
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
     }
+    user.password = 34354654
     return res.status(200).json({ user });
 }
 
@@ -195,4 +196,4 @@ const sellerSignin = async (req, res) => {
     req.session.save();
     return res.status(200).json({ message: 'Logged in successfully' })
 }
-export { login, signup, logout, sellerSignup, sellerSignin };
+export { login, signup, logout, getProfile, sellerSignup, sellerSignin };

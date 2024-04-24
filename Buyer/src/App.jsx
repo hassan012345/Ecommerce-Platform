@@ -1,7 +1,7 @@
 import './App.css'
 import Nav from "./components/Nav"
 import Footer from './components/Footer'
-import {ToastContainer} from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -21,71 +21,74 @@ import TrackOrder from './pages/Buyer/TrackOrder'
 import Login from './pages/Buyer/Login'
 import Signup from './pages/Buyer/Signup'
 import CompareProduct from './components/CompareProduct';
+import Profile from './pages/Buyer/Profile';
 
-function App() {  
- 
+function App() {
+
   return (
     <>
-    <Router>
-       <Nav/>
-      <Routes>
+      <Router>
+        <Nav />
+        <Routes>
 
-        <Route path="/" Component={Home}>
-      
-        </Route>
-        <Route path="/login" Component={Login}>
+          <Route path="/" Component={Home}>
 
-        </Route>
+          </Route>
+          <Route path="/login" Component={Login}>
 
-        <Route path="signup" Component={Signup}>
-      
-        </Route>
-        <Route path="/search" Component={Search}>
-      
-        </Route>
+          </Route>
 
-        <Route path="/shop" Component={Shopping}>
-      
-        </Route>
+          <Route path="signup" Component={Signup}>
 
+          </Route>
+          <Route path='/profile' Component={Profile}>
+          </Route>
+          <Route path="/search" Component={Search}>
 
+          </Route>
 
-        <Route path="/product/:id" Component={SingleProduct}>
-      
-        </Route>
+          <Route path="/shop" Component={Shopping}>
 
-
-        <Route path="/checkout" Component={Checkout}>
-      
-        </Route>
+          </Route>
 
 
 
-        <Route path="/cart" Component={Cart}>
-      
-        </Route>
+          <Route path="/product/:id" Component={SingleProduct}>
 
-        <Route path="/trackorder" Component={TrackOrder}>
-      
-        </Route>
+          </Route>
 
-        <Route path="/confirm-order" Component={OrderConfirm}>
-      
-        </Route>
 
-        <Route path="/confirm-order" Component={OrderConfirm}>
-      
-        </Route>
+          <Route path="/checkout" Component={Checkout}>
 
-        <Route path="/compare" Component={CompareProduct}>
+          </Route>
 
-        </Route>
-       
-      </Routes>
-      <Footer/>
-  </Router>
-   
-  </>
+
+
+          <Route path="/cart" Component={Cart}>
+
+          </Route>
+
+          <Route path="/trackorder" Component={TrackOrder}>
+
+          </Route>
+
+          <Route path="/confirm-order" Component={OrderConfirm}>
+
+          </Route>
+
+          <Route path="/confirm-order" Component={OrderConfirm}>
+
+          </Route>
+
+          <Route path="/compare" Component={CompareProduct}>
+
+          </Route>
+
+        </Routes>
+        <Footer />
+      </Router>
+
+    </>
   )
 }
 

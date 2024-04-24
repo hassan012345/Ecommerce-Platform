@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import Link from '@mui/material/Link';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,14 +13,7 @@ import Title from './Title';
 //   return { id, date, name, shipTo, paymentMethod, amount };
 // }
 
-useEffect(() => {
-  fetch('http://localhost:3000/orders')
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      setOrders(data);
-    });
-},[]);
+
 
 // const rows = [
 //   createData(
@@ -62,7 +56,17 @@ function preventDefault(event) {
 }
 
 export default function Orders() {
-  const [order, setOrder] = useState([]);
+  const [orders, setOrder] = useState([]);
+
+  useEffect(() => {
+  fetch('http://localhost:3000/orders')
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      setOrder(data);
+    });
+},[]);
+
   return (
     <React.Fragment>
       <Title>Recent Orders</Title>
@@ -77,10 +81,10 @@ export default function Orders() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
+          {orders.map((order) => (
+            <TableRow key={order.id}>
               <TableCell>{order.orderNumber}</TableCell>
-              <TableCell>{row.orderPrice}</TableCell>
+              <TableCell>{order.orderPrice}</TableCell>
               {/* <TableCell>{row.shipTo}</TableCell>
               <TableCell>{row.paymentMethod}</TableCell>
               <TableCell align="right">{`$${row.amount}`}</TableCell> */}
