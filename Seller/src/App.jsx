@@ -1,42 +1,14 @@
-import './App.css'
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { Dashboard, Auth } from "@/layouts";
 
-
-import dashboard from './pages/dashboard/Dashboard'
-import SellerSignup from './pages/Signup'
-import SellerLogin from './pages/Login'
-
-function App() {  
-
+function App() {
   return (
-    <Router>
-      
- 
-      <Routes>
-
-    
-        <Route path="/seller/signup" Component={SellerSignup}>
-      
-        </Route>
-
-        <Route path="/seller/login" Component={SellerLogin}>
-      
-        </Route>
-
-        <Route path="/dashboard" Component={dashboard}>
-        </Route>
-       
-      </Routes>
-
-  </Router>
-   
-  
-  )
+    <Routes>
+      <Route path="/dashboard/*" element={<Dashboard />} />
+      <Route path="/auth/*" element={<Auth />} />
+      <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
